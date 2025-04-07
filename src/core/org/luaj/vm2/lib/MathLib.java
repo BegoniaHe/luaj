@@ -116,6 +116,7 @@ public class MathLib extends TwoArgFunction {
 		math.set("min", new min());
 		math.set("modf", new modf());
 		math.set("pi", Math.PI );
+		math.set("e", Math.E );
 		math.set("pow", new pow());
 		random r;
 		math.set("random", r = new random());
