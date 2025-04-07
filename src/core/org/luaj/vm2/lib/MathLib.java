@@ -124,6 +124,7 @@ public class MathLib extends TwoArgFunction {
 		math.set("sin", new sin());
 		math.set("sqrt", new sqrt());
 		math.set("tan", new tan());
+		math.set("log", new log());
 		env.set("math", math);
 		if (!env.get("package").isnil()) env.get("package").get("loaded").set("math", math);
 		return math;
@@ -247,6 +248,23 @@ public class MathLib extends TwoArgFunction {
 			return valueOf( m + random.nextInt(n+1-m) );
 		}
 		
+	}
+
+	static class log extends LibFunction{
+		public LuaValue call(LuaValue arg) {
+			int n = arg.checkint();
+			if (n<1) argerror(1, "interval is empty");
+			if (n==1) return valueOf(0);
+			return valueOf(Math.log(n) / Math.log(Math.E));
+		}
+		public LuaValue call(LuaValue arg, LuaValue base) {
+			int n = arg.checkint();
+			if (n<1) argerror(1, "interval is empty");
+			if (n==1) return valueOf(0);
+			double b = base.checkdouble();
+			if (b==1) return valueOf(0);
+			return valueOf(Math.log(n) / Math.log(b));
+		}
 	}
 
 	static class randomseed extends OneArgFunction {
