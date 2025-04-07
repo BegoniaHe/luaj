@@ -125,7 +125,14 @@ public class MathLib extends TwoArgFunction {
 		math.set("sin", new sin());
 		math.set("sqrt", new sqrt());
 		math.set("tan", new tan());
+		math.set("acos", acos());
+		math.set("asin", asin());
+		math.set("atan", atan());
+		math.set("atan2", atan2());
 		math.set("log", new log());
+		math.set("cosh", cosh());
+		math.set("sinh", sinh());
+		math.set("tanh", tanh());
 		env.set("math", math);
 		if (!env.get("package").isnil()) env.get("package").get("loaded").set("math", math);
 		return math;
@@ -251,6 +258,39 @@ public class MathLib extends TwoArgFunction {
 		
 	}
 
+		static class randomseed extends OneArgFunction {
+		final random random;
+		randomseed(random random) {
+			this.random = random;
+		}
+		public LuaValue call(LuaValue arg) {
+			long seed = arg.checklong();
+			random.random = new Random(seed);
+			return NONE;
+		}
+	}
+
+	static class acos extends UnaryOp {
+		protected double call(double d) {
+			return Math.acos(d);
+		}
+	}
+	static class asin extends UnaryOp {
+		protected double call(double d) {
+			return Math.asin(d);
+		}
+	}
+	static class atan extends UnaryOp {
+		protected double call(double d) {
+			return Math.atan(d);
+		}
+	}
+	static class atan2 extends BinaryOp {
+		protected double call(double x, double y) {
+			return Math.atan2(x, y);
+		}
+	}
+
 	static class log extends LibFunction{
 		public LuaValue call(LuaValue arg) {
 			int n = arg.checkint();
@@ -268,15 +308,19 @@ public class MathLib extends TwoArgFunction {
 		}
 	}
 
-	static class randomseed extends OneArgFunction {
-		final random random;
-		randomseed(random random) {
-			this.random = random;
+	static class cosh extends UnaryOp {
+		protected double call(double d) {
+			return (Math.exp(d) + Math.exp(-d)) / 2;
 		}
-		public LuaValue call(LuaValue arg) {
-			long seed = arg.checklong();
-			random.random = new Random(seed);
-			return NONE;
+	}
+	static class sinh extends UnaryOp {
+		protected double call(double d) {
+			return (Math.exp(d) - Math.exp(-d)) / 2;
+		}
+	}
+	static class tanh extends UnaryOp {
+		protected double call(double d) {
+			return sinh().call(d) / cosh().call(d);
 		}
 	}
 	
