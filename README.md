@@ -12,6 +12,10 @@ on.<br>
 -- Benjamin P. Jung, Jan. 26th 2018
 </div>
 
+# TODO
+
+add bitoperator
+
 <h1>Getting Started with LuaJ</h1>
 James Roseborough, Ian Farmer, Version 3.0.2
 <p>
